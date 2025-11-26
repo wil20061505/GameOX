@@ -12,7 +12,7 @@ FONT_SMALL = pygame.font.SysFont(None, 24)
  
 trang_thai = st.state.menu # mặc định là menu
 active_mode = None # lưu chế độ chơi hiện tại để reset
-display_mode = True # lưu chế độ hiện thị mặc định là dark mode(true)
+
 screen = pygame.display.set_mode(cauhinh.WINDOW_SIZE)
 pygame.display.set_caption("TIK TAC TOK")
 
@@ -122,7 +122,7 @@ def draw_board_ui ():
         draw_button((cauhinh.SIZE - 100, cauhinh.SIZE + 10, 90, 40), "Menu")
     
     pygame.display.flip()
-    # vẽ chiến thắng
+# vẽ chiến thắng
 def draw_result():
     draw_board_ui()
     overlay = pygame.Surface((cauhinh.SIZE, cauhinh.SIZE), pygame.SRCALPHA)
@@ -139,7 +139,7 @@ def draw_result():
     screen.blit(hint, hint.get_rect(center=(cauhinh.SIZE // 2, cauhinh.SIZE // 2 + 40)))
     pygame.display.flip()
         
-# --- Logic game ---
+# --- Logic game
 
 def check_win():
     global winning_line
@@ -209,7 +209,9 @@ def ai_move():
                     move = (y, x)
     if move:
         board[move[0]][move[1]] = 'O'
-# --- Vòng lặp chính ---
+
+
+# --- Vòng lặp chính 
 clock = pygame.time.Clock()
 
 while True:
@@ -218,7 +220,7 @@ while True:
     elif trang_thai in (st.state.play_humman, st.state.play_AI):
         draw_board_ui()
     elif trang_thai == st.state.result:
-        draw_result()     # KHÔNG chạy draw_board_ui() nữa
+        draw_result()     
 
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
@@ -229,7 +231,7 @@ while True:
             mx, my = pygame.mouse.get_pos()
 
             if trang_thai == st.state.menu:
-                # 3 nút menu (vị trí tương ứng với draw_menu)
+                
                 if button_clicked((mx, my), (cauhinh.SIZE // 2 - 140, 200, 280, 50)):
                     reset_game()
                     active_mode = st.state.play_humman
@@ -246,7 +248,7 @@ while True:
                 # Nút Chơi lại
                 if button_clicked((mx, my), (cauhinh.SIZE - 200, cauhinh.SIZE + 10, 90, 40)):
                     reset_game()
-                    # giữ nguyên active_mode, chuyển trang_thai về active_mode
+                  
                     if active_mode:
                         trang_thai = active_mode
                     else:
@@ -272,7 +274,7 @@ while True:
                         else:
                             if trang_thai == st.state.play_humman:
                                 current = 'O' if current == 'X' else 'X'
-                            else:  # PLAY_AI
+                            else:  
                                 # Sau lượt người (X), máy đi (O)
                                 ai_move()
                                 w = check_win()
